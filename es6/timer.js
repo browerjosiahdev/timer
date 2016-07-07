@@ -20,9 +20,7 @@ class Timer {
         this.pause();
     	try {
     		$(this).trigger({ type: Timer.TIMER_COMPLETE, timer: this, timeRemaining: this.repeatTracker });
-    	} catch( error ) {
-    		throw new ReferenceError(Timer.DISPATCH_ERROR.replace(/%function%/g, 'Timer.complete();'));
-    	}
+    	} catch( error ) {}
     }
     constructor (interval, repeat) {
         this.interval = interval;
@@ -48,9 +46,7 @@ class Timer {
         this.repeatTracker = this.repeat;
     	try {
     		$(this).trigger({ type: Timer.TIMER_RESET, timer: this, timeRemaining: this.repeatTracker, running: this.getRunning() });
-    	} catch( error ) {
-    		throw new ReferenceError(Timer.DISPATCH_ERROR.replace(/%function%/g, 'Timer.reset();'));
-    	}
+    	} catch( error ) {}
     }
     start () {
         if (this.timer === undefined) {
@@ -63,12 +59,11 @@ class Timer {
     update () {
         try {
     		$(this).trigger({ type: Timer.TIMER, timer: this, timeRemaining: this.repeatTracker });
-    	} catch( error ) {
-    		throw new ReferenceError(Timer.DISPATCH_ERROR.replace(/%function%/g, 'Timer.update();'));
-    	}
+    	} catch( error ) {}
     }
 }
 Timer.TIMER = 'timer';
 Timer.TIMER_COMPLETE = 'timer-complete';
 Timer.TIMER_RESET = 'timer-reset';
 Timer.DISPATCH_ERROR = 'Not able to dispatch event, please make sure you are including jQuery in your project: %function%';
+window.Timer = Timer;
